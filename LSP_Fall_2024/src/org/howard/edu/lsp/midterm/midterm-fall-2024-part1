@@ -1,0 +1,115 @@
+
+Question 1.
+
+a) The UserFitness class has low cohesion because it handles multiple unrelated responsibilities, 
+including user details, workout tracking, step tracking, and nutrition tracking. These functions 
+are distinct and loosely connected, making the class try to do too much. For instance, tracking meals 
+and calories is separate from tracking steps or workouts, and storing user information is a different 
+concern from managing exercise data. This lack of focus results in low cohesion.
+
+b) To increase cohesion, the UserFitness class can be split into more focused classes. 
+A UserProfile class would manage user details like userName, userAge, weight, and height. 
+A WorkoutLog class could handle workout types and calories burned. The StepTracker class would 
+manage daily step counts, while a NutritionLog class could track meals and calories consumed. 
+An optional FitnessReportGenerator class could compile data from other classes into a fitness report. 
+This approach keeps each class focused on a single aspect, making the system more modular and maintainable.
+
+Question 2.
+
+a) Student should be an abstract class. The reason is that Student represents a general concept of a student, 
+but it is not complete on its own since it requires year-specific behaviors (such as FirstYear, SecondYear, 
+and ThirdYear). An abstract class allows you to define common attributes and methods for all students, 
+such as a student ID or name, while ensuring that subclasses like FirstYear, SecondYear, and ThirdYear provide 
+the specific behaviors that differ between years. An interface wouldn't be appropriate because it doesn't allow 
+shared implementation, and a regular class would be too restrictive, as it implies that all students behave the same, 
+which isn't true in this case.
+
+b) The method is flawed because modifying a list while iterating over it causes ConcurrentModificationException in Java. 
+Arthur Riel’s heuristic suggests that a collection should not be modified during iteration. In this case, the removeThirdYears
+method attempts to remove elements from the students list inside a for loop while iterating through it, which leads to concurrent 
+modification of the list. To fix this, the method should either use an Iterator with its remove() method or collect the ThirdYear 
+students to remove in a separate list, and then remove them outside the iteration loop.
+(Source: Arthur Riel's "Object-Oriented Design Heuristics")
+
+
+Question 3.
+
+The BankAccount class is not well-encapsulated because it exposes its fields directly to other classes. The attributes 
+accountHolderName, accountNumber, balance, and interestRate are declared as public, meaning they can be accessed and modified 
+directly from outside the BankAccount class. This breaks the principle of encapsulation, which aims to restrict direct access 
+to the object's data and instead provide controlled access through methods.
+
+To improve the encapsulation of the BankAccount class, I would make the following changes. First, I would change the field access 
+modifiers for accountHolderName, accountNumber, balance, and interestRate from public to private to restrict direct access from 
+outside the class. Next, I would add getter methods for these fields to allow controlled access to their values. Additionally, 
+I would introduce a setter method for the interestRate field if changing the interest rate is necessary, ensuring that any modifications 
+are done through a controlled method. The methods for deposits, withdrawals, and adding interest would remain unchanged, as they already 
+provide a controlled way to modify the balance. These changes would ensure that the BankAccount class follows proper encapsulation principles, 
+protecting its internal state while allowing necessary interactions.
+
+Question 4.
+
+a) The current structure does not support dynamic trim-level changes effectively because it uses inheritance to define different trim levels 
+(Base, Sports, and Luxury). Inheritance implies a "is-a" relationship, which means that each subclass (Base, Sports, Luxury) is a specific 
+type of Car and is tightly coupled to its respective characteristics. In this setup, changing the trim level of a car during the manufacturing 
+process would mean changing the entire instance type from one subclass to another (for example, from a Base instance to a Luxury instance). 
+This is not possible without creating a new instance of the desired trim level class, which can be inefficient and complex, as it involves 
+copying over attributes and behaviors from one object to another. Additionally, if the Car class has methods or fields that are intended to 
+be shared among all cars regardless of trim level, those would need to be reinitialized or re-copied, which further complicates the process. 
+Thus, the inheritance-based approach is too rigid for situations where trim levels need to be changed dynamically.
+
+b) To refactor the structure for dynamic trim-level changes, the Car class should use composition instead of inheritance. Rather than having Base, 
+Sports, and Luxury as subclasses, create a TrimLevel class or interface that represents the behavior of a trim. Then, each specific trim level—like 
+base, sports, or luxury—becomes its own class implementing the TrimLevel interface. The Car class would have a TrimLevel attribute, allowing the trim 
+level to be set or changed at any time using a method like setTrimLevel(). This way, switching between trims involves changing the TrimLevel instance 
+associated with a car rather than creating a new Car object. This refactoring makes the system more flexible, allowing cars to adapt to changes in trim 
+level without the rigidity of the current inheritance-based structure.
+
+Question 5.
+
+When two classes contain large parts of the same code but differ in smaller parts, this can lead to code duplication, which violates Arthur Riel’s 
+heuristic that discourages duplicated code across multiple classes. Duplication makes the code harder to maintain because any change in the shared 
+functionality must be applied in multiple places, increasing the risk of inconsistencies. To solve this, consider using inheritance or composition 
+to extract the common functionality into a shared superclass or utility class. This allows the different classes to inherit or reference the shared 
+behavior while keeping their unique features separate.
+
+Question 6.
+
+Placing database calls directly in the Car and BankAccount classes results in high coupling between these classes and the database. According to
+ best design principles, including Arthur Riel’s heuristics, classes should have low coupling to be easier to maintain and modify. 
+If the database changes, it would require modifications in every class that directly interacts with it. A better solution is to use a Data Access 
+Object (DAO) or repository pattern to handle database interactions separately. This keeps the Car and BankAccount classes focused on their core 
+responsibilities, reducing their dependency on database specifics.
+
+Question 7.
+
+When designing a new class hierarchy using inheritance, certain conditions should be met. First, the superclass should define common behavior or 
+properties that are shared across all subclasses, ensuring code reuse. Second, subclasses should represent specialized versions of the superclass, 
+implementing or extending its behavior without introducing unrelated functionality. The "is-a" relationship must be clear—each subclass should truly 
+be a type of the superclass. Additionally, the hierarchy should be stable, meaning that the structure is unlikely to change frequently, as changes 
+can introduce complications.
+
+Question 8.
+
+Inheritance is a mechanism where a class derives properties and behaviors from a parent class, representing an "is-a" relationship. Composition, on the other hand, 
+involves using objects of one class within another class, representing a "has-a" relationship. Composition is generally preferred when the relationship is more about 
+using functionalities or when you want flexibility, as it allows you to change the composed class without affecting the dependent class. Inheritance is suitable when 
+classes share a common behavior that can be extended or overridden.
+
+Question 9.
+
+Cohesion refers to how closely related and focused the responsibilities of a class or module are. High cohesion means that a class is focused on a single 
+task or responsibility, making it easier to understand, maintain, and reuse. Low cohesion means a class handles many unrelated tasks, leading to a more 
+complex and harder-to-maintain codebase. High cohesion is generally better because it aligns with the principle of single responsibility, ensuring that 
+classes are modular and changes in one area do not unintentionally affect others.
+
+
+
+
+
+
+
+
+
+
+
